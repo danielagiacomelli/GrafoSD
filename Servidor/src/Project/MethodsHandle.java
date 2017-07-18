@@ -476,9 +476,12 @@ public class MethodsHandle implements Methods.Iface {
                                 menorCaminho.add(verticeCaminho.getPai());
                                 verticeCaminho = verticeCaminho.getPai();
                             }
+<<<<<<< HEAD
                             // Ordena a lista do menor caminho, para que ele
                             // seja exibido da origem ao destino.
                             //Collections.sort(menorCaminho);
+=======
+>>>>>>> 75c65e7f59ef2476dfd985969935908ed06aaa8d
                         }
                     }
                 }
@@ -487,12 +490,19 @@ public class MethodsHandle implements Methods.Iface {
             // visitados
             vAtual.Visitado();
             naoVisitados.remove(vAtual);
+<<<<<<< HEAD
 
             //Ordena a lista, para que o vertice com menor distancia fique na
             // primeira posicao
             //Collections.sort(naoVisitados);
             System.out.println("Nao foram visitados ainda:" + naoVisitados);
         }
+=======
+            
+            System.out.println("Nao foram visitados ainda:" + naoVisitados);
+        }
+
+>>>>>>> 75c65e7f59ef2476dfd985969935908ed06aaa8d
         List<String> s = new ArrayList<String>();
         
         for (int i = 0; i < menorCaminho.size(); i++) {
