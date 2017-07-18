@@ -3,95 +3,59 @@ package ClientBD;
 import ThriftGenerate.Edge;
 import ThriftGenerate.Vertex;
 import ThriftGenerate.Methods;
+import java.io.IOException;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import org.apache.thrift.TException;
 import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TProtocol;
+import org.apache.thrift.transport.TSSLTransportFactory;
+import org.apache.thrift.transport.TTransportException;
 
 public class JavaClient {
 
-    public static void main(String[] args) {
-        try {
-            TTransport transport;
-            transport = new TSocket("localhost", 9090);
-            transport.open();
+    public static void main(String[] args) throws IOException, TTransportException, TException {
 
-            TProtocol protocol = new TBinaryProtocol(transport);
-            Methods.Client client = new Methods.Client(protocol);
-
-            perform(client);
-
-            transport.close();
+        /*try {
+        TTransport transport;
+        
+        transport = new TSocket("localhost", 8090);
+        transport.open();
+        
+        TProtocol protocol = new TBinaryProtocol(transport);
+        Methods.Client client = new Methods.Client(protocol);
+        
+        Connector c = new Connector();
+        c.perform(client);
+        
+        transport.close();
         } catch (TException x) {
-            x.printStackTrace();
+        x.printStackTrace();
+        }*/
+        int quantidade = 2;
+        TTransport[] conexoes = new TSocket[quantidade];
+
+        for (int i = 0; i < quantidade; i++) {
+            conexoes[i] = new TSocket("localhost", 8090 + 1);
+
+            conexoes[i].open();
         }
-    }
+        
+        TProtocol protocol = new TBinaryProtocol(conexoes[0]);
+        TProtocol protocol2 = new TBinaryProtocol(conexoes[1]);
+        
+        Methods.Client client = new Methods.Client(protocol);
+        Methods.Client client2 = new Methods.Client(protocol2);
 
-    private static void perform(Methods.Client client) throws TException {
-
-        Vertex vertex = new Vertex();
+        Connector c = new Connector();
+        c.perform(client, client2);
         
-        vertex.idVertex = 1;
-        vertex.nameVertex = "Daniel";
-        vertex.version = 1;
-        vertex.color = "Azul";
-        vertex.description = "Descrição";
-        vertex.weight = 10;
-        
-
-        Vertex vertex2 = new Vertex();
-        vertex2.idVertex = 2;
-        vertex2.nameVertex = "Saulo";
-        vertex2.version = 1;
-        vertex2.color = "Vermelho";
-        vertex2.description = "Descrição";
-        vertex2.weight = 5;
-
-        //System.out.println(client.createVertex(vertex));
-        System.out.println(client.createVertex(vertex2));
-        //System.out.println(client.deleteVertex(1));
-        //System.out.println(client.deleteVertex(2));
-        //System.out.println(client.deleteEdge(1));
-
-        //System.out.println(client.showBase());
-        //System.out.println(client.readVertex(1));
-        //System.out.println(client.readVertex(2));
-        
-        
-        //System.out.println(client.deleteVertex(1));
-        
-        //System.out.println(client.showBase());
-        
-        
-        Edge edge = new Edge();
-        
-        edge.idEdge = 1;
-        edge.nameEdge = "aresta";
-        edge.version = 1;
-        edge.idVertex1 = 1;
-        edge.idVertex2 = 2;
-        edge.description = "Descrição";
-        edge.flagDirected = true;
-        edge.weight = 5;
-        
-        
-        //System.out.println(client.updateVertex(1, "Amarelo", "Descrição Alterada", 15));
-        //System.out.println(client.updateEdge(1, "a1", "Descrição alterada", 7, false));
-        //System.out.println(client.createEdge(edge));
-        //System.out.println(client.readEdge(1));
-        
-        //System.out.println(client.deleteEdge(1));
-        
-        
-        //System.out.println(client.createEdge(edge));
-        
-        //System.out.println(client.showBase());
-        
-        System.out.println(client.showBase());
-        
-        //System.out.println(client.listVertexForEdge(1));
-        //System.out.println(client.listEdgeForVertex(1));
+        for (int i = 0; i < quantidade; i++) {
+            conexoes[i].close();
+        }
     }
 }

@@ -44,6 +44,8 @@ public class Methods {
 
     public String showBase() throws org.apache.thrift.TException;
 
+    public List<String> dijkstra(Vertex v1, Vertex v2) throws org.apache.thrift.TException;
+
     public String createEdge(Edge a) throws org.apache.thrift.TException;
 
     public String readEdge(int idEdge) throws org.apache.thrift.TException;
@@ -71,6 +73,8 @@ public class Methods {
     public void deleteVertex(int idVertex, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
     public void showBase(org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+
+    public void dijkstra(Vertex v1, Vertex v2, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
     public void createEdge(Edge a, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
@@ -199,6 +203,30 @@ public class Methods {
         return result.success;
       }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "showBase failed: unknown result");
+    }
+
+    public List<String> dijkstra(Vertex v1, Vertex v2) throws org.apache.thrift.TException
+    {
+      send_dijkstra(v1, v2);
+      return recv_dijkstra();
+    }
+
+    public void send_dijkstra(Vertex v1, Vertex v2) throws org.apache.thrift.TException
+    {
+      dijkstra_args args = new dijkstra_args();
+      args.setV1(v1);
+      args.setV2(v2);
+      sendBase("dijkstra", args);
+    }
+
+    public List<String> recv_dijkstra() throws org.apache.thrift.TException
+    {
+      dijkstra_result result = new dijkstra_result();
+      receiveBase(result, "dijkstra");
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "dijkstra failed: unknown result");
     }
 
     public String createEdge(Edge a) throws org.apache.thrift.TException
@@ -535,6 +563,41 @@ public class Methods {
       }
     }
 
+    public void dijkstra(Vertex v1, Vertex v2, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      dijkstra_call method_call = new dijkstra_call(v1, v2, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class dijkstra_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private Vertex v1;
+      private Vertex v2;
+      public dijkstra_call(Vertex v1, Vertex v2, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.v1 = v1;
+        this.v2 = v2;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("dijkstra", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        dijkstra_args args = new dijkstra_args();
+        args.setV1(v1);
+        args.setV2(v2);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public List<String> getResult() throws org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_dijkstra();
+      }
+    }
+
     public void createEdge(Edge a, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
       createEdge_call method_call = new createEdge_call(a, resultHandler, this, ___protocolFactory, ___transport);
@@ -829,6 +892,7 @@ public class Methods {
       processMap.put("readVertex", new readVertex());
       processMap.put("deleteVertex", new deleteVertex());
       processMap.put("showBase", new showBase());
+      processMap.put("dijkstra", new dijkstra());
       processMap.put("createEdge", new createEdge());
       processMap.put("readEdge", new readEdge());
       processMap.put("deleteEdge", new deleteEdge());
@@ -916,6 +980,26 @@ public class Methods {
       public showBase_result getResult(I iface, showBase_args args) throws org.apache.thrift.TException {
         showBase_result result = new showBase_result();
         result.success = iface.showBase();
+        return result;
+      }
+    }
+
+    public static class dijkstra<I extends Iface> extends org.apache.thrift.ProcessFunction<I, dijkstra_args> {
+      public dijkstra() {
+        super("dijkstra");
+      }
+
+      public dijkstra_args getEmptyArgsInstance() {
+        return new dijkstra_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public dijkstra_result getResult(I iface, dijkstra_args args) throws org.apache.thrift.TException {
+        dijkstra_result result = new dijkstra_result();
+        result.success = iface.dijkstra(args.v1, args.v2);
         return result;
       }
     }
@@ -1097,6 +1181,7 @@ public class Methods {
       processMap.put("readVertex", new readVertex());
       processMap.put("deleteVertex", new deleteVertex());
       processMap.put("showBase", new showBase());
+      processMap.put("dijkstra", new dijkstra());
       processMap.put("createEdge", new createEdge());
       processMap.put("readEdge", new readEdge());
       processMap.put("deleteEdge", new deleteEdge());
@@ -1309,6 +1394,57 @@ public class Methods {
 
       public void start(I iface, showBase_args args, org.apache.thrift.async.AsyncMethodCallback<String> resultHandler) throws TException {
         iface.showBase(resultHandler);
+      }
+    }
+
+    public static class dijkstra<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, dijkstra_args, List<String>> {
+      public dijkstra() {
+        super("dijkstra");
+      }
+
+      public dijkstra_args getEmptyArgsInstance() {
+        return new dijkstra_args();
+      }
+
+      public AsyncMethodCallback<List<String>> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new AsyncMethodCallback<List<String>>() { 
+          public void onComplete(List<String> o) {
+            dijkstra_result result = new dijkstra_result();
+            result.success = o;
+            try {
+              fcall.sendResponse(fb,result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+              return;
+            } catch (Exception e) {
+              LOGGER.error("Exception writing to internal frame buffer", e);
+            }
+            fb.close();
+          }
+          public void onError(Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TBase msg;
+            dijkstra_result result = new dijkstra_result();
+            {
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TBase)new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+              return;
+            } catch (Exception ex) {
+              LOGGER.error("Exception writing to internal frame buffer", ex);
+            }
+            fb.close();
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, dijkstra_args args, org.apache.thrift.async.AsyncMethodCallback<List<String>> resultHandler) throws TException {
+        iface.dijkstra(args.v1, args.v2,resultHandler);
       }
     }
 
@@ -4440,6 +4576,873 @@ public class Methods {
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           struct.success = iprot.readString();
+          struct.setSuccessIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class dijkstra_args implements org.apache.thrift.TBase<dijkstra_args, dijkstra_args._Fields>, java.io.Serializable, Cloneable, Comparable<dijkstra_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("dijkstra_args");
+
+    private static final org.apache.thrift.protocol.TField V1_FIELD_DESC = new org.apache.thrift.protocol.TField("v1", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+    private static final org.apache.thrift.protocol.TField V2_FIELD_DESC = new org.apache.thrift.protocol.TField("v2", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new dijkstra_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new dijkstra_argsTupleSchemeFactory());
+    }
+
+    public Vertex v1; // required
+    public Vertex v2; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      V1((short)1, "v1"),
+      V2((short)2, "v2");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // V1
+            return V1;
+          case 2: // V2
+            return V2;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.V1, new org.apache.thrift.meta_data.FieldMetaData("v1", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Vertex.class)));
+      tmpMap.put(_Fields.V2, new org.apache.thrift.meta_data.FieldMetaData("v2", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Vertex.class)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(dijkstra_args.class, metaDataMap);
+    }
+
+    public dijkstra_args() {
+    }
+
+    public dijkstra_args(
+      Vertex v1,
+      Vertex v2)
+    {
+      this();
+      this.v1 = v1;
+      this.v2 = v2;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public dijkstra_args(dijkstra_args other) {
+      if (other.isSetV1()) {
+        this.v1 = new Vertex(other.v1);
+      }
+      if (other.isSetV2()) {
+        this.v2 = new Vertex(other.v2);
+      }
+    }
+
+    public dijkstra_args deepCopy() {
+      return new dijkstra_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.v1 = null;
+      this.v2 = null;
+    }
+
+    public Vertex getV1() {
+      return this.v1;
+    }
+
+    public dijkstra_args setV1(Vertex v1) {
+      this.v1 = v1;
+      return this;
+    }
+
+    public void unsetV1() {
+      this.v1 = null;
+    }
+
+    /** Returns true if field v1 is set (has been assigned a value) and false otherwise */
+    public boolean isSetV1() {
+      return this.v1 != null;
+    }
+
+    public void setV1IsSet(boolean value) {
+      if (!value) {
+        this.v1 = null;
+      }
+    }
+
+    public Vertex getV2() {
+      return this.v2;
+    }
+
+    public dijkstra_args setV2(Vertex v2) {
+      this.v2 = v2;
+      return this;
+    }
+
+    public void unsetV2() {
+      this.v2 = null;
+    }
+
+    /** Returns true if field v2 is set (has been assigned a value) and false otherwise */
+    public boolean isSetV2() {
+      return this.v2 != null;
+    }
+
+    public void setV2IsSet(boolean value) {
+      if (!value) {
+        this.v2 = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case V1:
+        if (value == null) {
+          unsetV1();
+        } else {
+          setV1((Vertex)value);
+        }
+        break;
+
+      case V2:
+        if (value == null) {
+          unsetV2();
+        } else {
+          setV2((Vertex)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case V1:
+        return getV1();
+
+      case V2:
+        return getV2();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case V1:
+        return isSetV1();
+      case V2:
+        return isSetV2();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof dijkstra_args)
+        return this.equals((dijkstra_args)that);
+      return false;
+    }
+
+    public boolean equals(dijkstra_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_v1 = true && this.isSetV1();
+      boolean that_present_v1 = true && that.isSetV1();
+      if (this_present_v1 || that_present_v1) {
+        if (!(this_present_v1 && that_present_v1))
+          return false;
+        if (!this.v1.equals(that.v1))
+          return false;
+      }
+
+      boolean this_present_v2 = true && this.isSetV2();
+      boolean that_present_v2 = true && that.isSetV2();
+      if (this_present_v2 || that_present_v2) {
+        if (!(this_present_v2 && that_present_v2))
+          return false;
+        if (!this.v2.equals(that.v2))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    @Override
+    public int compareTo(dijkstra_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetV1()).compareTo(other.isSetV1());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetV1()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.v1, other.v1);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetV2()).compareTo(other.isSetV2());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetV2()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.v2, other.v2);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("dijkstra_args(");
+      boolean first = true;
+
+      sb.append("v1:");
+      if (this.v1 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.v1);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("v2:");
+      if (this.v2 == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.v2);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (v1 != null) {
+        v1.validate();
+      }
+      if (v2 != null) {
+        v2.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class dijkstra_argsStandardSchemeFactory implements SchemeFactory {
+      public dijkstra_argsStandardScheme getScheme() {
+        return new dijkstra_argsStandardScheme();
+      }
+    }
+
+    private static class dijkstra_argsStandardScheme extends StandardScheme<dijkstra_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, dijkstra_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // V1
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.v1 = new Vertex();
+                struct.v1.read(iprot);
+                struct.setV1IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // V2
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.v2 = new Vertex();
+                struct.v2.read(iprot);
+                struct.setV2IsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, dijkstra_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.v1 != null) {
+          oprot.writeFieldBegin(V1_FIELD_DESC);
+          struct.v1.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.v2 != null) {
+          oprot.writeFieldBegin(V2_FIELD_DESC);
+          struct.v2.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class dijkstra_argsTupleSchemeFactory implements SchemeFactory {
+      public dijkstra_argsTupleScheme getScheme() {
+        return new dijkstra_argsTupleScheme();
+      }
+    }
+
+    private static class dijkstra_argsTupleScheme extends TupleScheme<dijkstra_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, dijkstra_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetV1()) {
+          optionals.set(0);
+        }
+        if (struct.isSetV2()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetV1()) {
+          struct.v1.write(oprot);
+        }
+        if (struct.isSetV2()) {
+          struct.v2.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, dijkstra_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          struct.v1 = new Vertex();
+          struct.v1.read(iprot);
+          struct.setV1IsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.v2 = new Vertex();
+          struct.v2.read(iprot);
+          struct.setV2IsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class dijkstra_result implements org.apache.thrift.TBase<dijkstra_result, dijkstra_result._Fields>, java.io.Serializable, Cloneable, Comparable<dijkstra_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("dijkstra_result");
+
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.LIST, (short)0);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new dijkstra_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new dijkstra_resultTupleSchemeFactory());
+    }
+
+    public List<String> success; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      SUCCESS((short)0, "success");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
+              new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING))));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(dijkstra_result.class, metaDataMap);
+    }
+
+    public dijkstra_result() {
+    }
+
+    public dijkstra_result(
+      List<String> success)
+    {
+      this();
+      this.success = success;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public dijkstra_result(dijkstra_result other) {
+      if (other.isSetSuccess()) {
+        List<String> __this__success = new ArrayList<String>(other.success);
+        this.success = __this__success;
+      }
+    }
+
+    public dijkstra_result deepCopy() {
+      return new dijkstra_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+    }
+
+    public int getSuccessSize() {
+      return (this.success == null) ? 0 : this.success.size();
+    }
+
+    public java.util.Iterator<String> getSuccessIterator() {
+      return (this.success == null) ? null : this.success.iterator();
+    }
+
+    public void addToSuccess(String elem) {
+      if (this.success == null) {
+        this.success = new ArrayList<String>();
+      }
+      this.success.add(elem);
+    }
+
+    public List<String> getSuccess() {
+      return this.success;
+    }
+
+    public dijkstra_result setSuccess(List<String> success) {
+      this.success = success;
+      return this;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been assigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((List<String>)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof dijkstra_result)
+        return this.equals((dijkstra_result)that);
+      return false;
+    }
+
+    public boolean equals(dijkstra_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    @Override
+    public int compareTo(dijkstra_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(other.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, other.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("dijkstra_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class dijkstra_resultStandardSchemeFactory implements SchemeFactory {
+      public dijkstra_resultStandardScheme getScheme() {
+        return new dijkstra_resultStandardScheme();
+      }
+    }
+
+    private static class dijkstra_resultStandardScheme extends StandardScheme<dijkstra_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, dijkstra_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 0: // SUCCESS
+              if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
+                {
+                  org.apache.thrift.protocol.TList _list8 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list8.size);
+                  for (int _i9 = 0; _i9 < _list8.size; ++_i9)
+                  {
+                    String _elem10;
+                    _elem10 = iprot.readString();
+                    struct.success.add(_elem10);
+                  }
+                  iprot.readListEnd();
+                }
+                struct.setSuccessIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, dijkstra_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.success != null) {
+          oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+          {
+            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
+            for (String _iter11 : struct.success)
+            {
+              oprot.writeString(_iter11);
+            }
+            oprot.writeListEnd();
+          }
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class dijkstra_resultTupleSchemeFactory implements SchemeFactory {
+      public dijkstra_resultTupleScheme getScheme() {
+        return new dijkstra_resultTupleScheme();
+      }
+    }
+
+    private static class dijkstra_resultTupleScheme extends TupleScheme<dijkstra_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, dijkstra_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetSuccess()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetSuccess()) {
+          {
+            oprot.writeI32(struct.success.size());
+            for (String _iter12 : struct.success)
+            {
+              oprot.writeString(_iter12);
+            }
+          }
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, dijkstra_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          {
+            org.apache.thrift.protocol.TList _list13 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list13.size);
+            for (int _i14 = 0; _i14 < _list13.size; ++_i14)
+            {
+              String _elem15;
+              _elem15 = iprot.readString();
+              struct.success.add(_elem15);
+            }
+          }
           struct.setSuccessIsSet(true);
         }
       }

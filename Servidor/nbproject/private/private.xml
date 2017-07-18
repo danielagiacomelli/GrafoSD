@@ -2,13 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/home/dcosta/NetBeansProjects/Servidor/src/DataBases/VertexDatabase.java</file>
-            <file>file:/home/dcosta/NetBeansProjects/Servidor/src/DataBases/EdgeDatabase.java</file>
-            <file>file:/home/dcosta/NetBeansProjects/Servidor/src/Models/DadosVertex.java</file>
-            <file>file:/home/dcosta/NetBeansProjects/Servidor/src/Project/MethodsHandle.java</file>
-            <file>file:/home/dcosta/NetBeansProjects/Servidor/src/Project/Main.java</file>
-            <file>file:/home/dcosta/NetBeansProjects/Servidor/src/Models/DadosEdge.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

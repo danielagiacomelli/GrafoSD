@@ -14,7 +14,7 @@ public class Main {
 			MethodsHandle handler = new MethodsHandle();
 			Methods.Processor processor = new Methods.Processor(handler);
                         
-			TServerTransport serverTransport = new TServerSocket(8090);
+			TServerTransport serverTransport = new TServerSocket(8091);
                         
 			TServer server = new TThreadPoolServer(new TThreadPoolServer.Args(serverTransport).processor(processor));
 

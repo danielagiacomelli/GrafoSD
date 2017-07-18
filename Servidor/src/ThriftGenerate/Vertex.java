@@ -38,11 +38,11 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
   private static final org.apache.thrift.protocol.TField NAME_VERTEX_FIELD_DESC = new org.apache.thrift.protocol.TField("nameVertex", org.apache.thrift.protocol.TType.STRING, (short)1);
   private static final org.apache.thrift.protocol.TField ID_VERTEX_FIELD_DESC = new org.apache.thrift.protocol.TField("idVertex", org.apache.thrift.protocol.TType.I32, (short)2);
   private static final org.apache.thrift.protocol.TField VERSION_FIELD_DESC = new org.apache.thrift.protocol.TField("version", org.apache.thrift.protocol.TType.I32, (short)3);
-  private static final org.apache.thrift.protocol.TField ID_EDGE1_FIELD_DESC = new org.apache.thrift.protocol.TField("idEdge1", org.apache.thrift.protocol.TType.I32, (short)4);
-  private static final org.apache.thrift.protocol.TField ID_EDGE2_FIELD_DESC = new org.apache.thrift.protocol.TField("idEdge2", org.apache.thrift.protocol.TType.I32, (short)5);
-  private static final org.apache.thrift.protocol.TField COLOR_FIELD_DESC = new org.apache.thrift.protocol.TField("color", org.apache.thrift.protocol.TType.STRING, (short)6);
-  private static final org.apache.thrift.protocol.TField DESCRIPTION_FIELD_DESC = new org.apache.thrift.protocol.TField("description", org.apache.thrift.protocol.TType.STRING, (short)7);
-  private static final org.apache.thrift.protocol.TField WEIGHT_FIELD_DESC = new org.apache.thrift.protocol.TField("weight", org.apache.thrift.protocol.TType.DOUBLE, (short)8);
+  private static final org.apache.thrift.protocol.TField COLOR_FIELD_DESC = new org.apache.thrift.protocol.TField("color", org.apache.thrift.protocol.TType.STRING, (short)4);
+  private static final org.apache.thrift.protocol.TField DESCRIPTION_FIELD_DESC = new org.apache.thrift.protocol.TField("description", org.apache.thrift.protocol.TType.STRING, (short)5);
+  private static final org.apache.thrift.protocol.TField WEIGHT_FIELD_DESC = new org.apache.thrift.protocol.TField("weight", org.apache.thrift.protocol.TType.DOUBLE, (short)6);
+  private static final org.apache.thrift.protocol.TField DISTANCE_FIELD_DESC = new org.apache.thrift.protocol.TField("distance", org.apache.thrift.protocol.TType.DOUBLE, (short)7);
+  private static final org.apache.thrift.protocol.TField ED_FIELD_DESC = new org.apache.thrift.protocol.TField("ed", org.apache.thrift.protocol.TType.LIST, (short)8);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -53,22 +53,22 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
   public String nameVertex; // required
   public int idVertex; // required
   public int version; // required
-  public int idEdge1; // required
-  public int idEdge2; // required
   public String color; // required
   public String description; // required
   public double weight; // required
+  public double distance; // required
+  public List<Integer> ed; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     NAME_VERTEX((short)1, "nameVertex"),
     ID_VERTEX((short)2, "idVertex"),
     VERSION((short)3, "version"),
-    ID_EDGE1((short)4, "idEdge1"),
-    ID_EDGE2((short)5, "idEdge2"),
-    COLOR((short)6, "color"),
-    DESCRIPTION((short)7, "description"),
-    WEIGHT((short)8, "weight");
+    COLOR((short)4, "color"),
+    DESCRIPTION((short)5, "description"),
+    WEIGHT((short)6, "weight"),
+    DISTANCE((short)7, "distance"),
+    ED((short)8, "ed");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -89,16 +89,16 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
           return ID_VERTEX;
         case 3: // VERSION
           return VERSION;
-        case 4: // ID_EDGE1
-          return ID_EDGE1;
-        case 5: // ID_EDGE2
-          return ID_EDGE2;
-        case 6: // COLOR
+        case 4: // COLOR
           return COLOR;
-        case 7: // DESCRIPTION
+        case 5: // DESCRIPTION
           return DESCRIPTION;
-        case 8: // WEIGHT
+        case 6: // WEIGHT
           return WEIGHT;
+        case 7: // DISTANCE
+          return DISTANCE;
+        case 8: // ED
+          return ED;
         default:
           return null;
       }
@@ -141,9 +141,8 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
   // isset id assignments
   private static final int __IDVERTEX_ISSET_ID = 0;
   private static final int __VERSION_ISSET_ID = 1;
-  private static final int __IDEDGE1_ISSET_ID = 2;
-  private static final int __IDEDGE2_ISSET_ID = 3;
-  private static final int __WEIGHT_ISSET_ID = 4;
+  private static final int __WEIGHT_ISSET_ID = 2;
+  private static final int __DISTANCE_ISSET_ID = 3;
   private byte __isset_bitfield = 0;
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
@@ -154,16 +153,17 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
     tmpMap.put(_Fields.VERSION, new org.apache.thrift.meta_data.FieldMetaData("version", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
-    tmpMap.put(_Fields.ID_EDGE1, new org.apache.thrift.meta_data.FieldMetaData("idEdge1", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
-    tmpMap.put(_Fields.ID_EDGE2, new org.apache.thrift.meta_data.FieldMetaData("idEdge2", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
     tmpMap.put(_Fields.COLOR, new org.apache.thrift.meta_data.FieldMetaData("color", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.DESCRIPTION, new org.apache.thrift.meta_data.FieldMetaData("description", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.WEIGHT, new org.apache.thrift.meta_data.FieldMetaData("weight", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
+    tmpMap.put(_Fields.DISTANCE, new org.apache.thrift.meta_data.FieldMetaData("distance", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
+    tmpMap.put(_Fields.ED, new org.apache.thrift.meta_data.FieldMetaData("ed", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
+            new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32))));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Vertex.class, metaDataMap);
   }
@@ -175,11 +175,11 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
     String nameVertex,
     int idVertex,
     int version,
-    int idEdge1,
-    int idEdge2,
     String color,
     String description,
-    double weight)
+    double weight,
+    double distance,
+    List<Integer> ed)
   {
     this();
     this.nameVertex = nameVertex;
@@ -187,14 +187,13 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
     setIdVertexIsSet(true);
     this.version = version;
     setVersionIsSet(true);
-    this.idEdge1 = idEdge1;
-    setIdEdge1IsSet(true);
-    this.idEdge2 = idEdge2;
-    setIdEdge2IsSet(true);
     this.color = color;
     this.description = description;
     this.weight = weight;
     setWeightIsSet(true);
+    this.distance = distance;
+    setDistanceIsSet(true);
+    this.ed = ed;
   }
 
   /**
@@ -207,8 +206,6 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
     }
     this.idVertex = other.idVertex;
     this.version = other.version;
-    this.idEdge1 = other.idEdge1;
-    this.idEdge2 = other.idEdge2;
     if (other.isSetColor()) {
       this.color = other.color;
     }
@@ -216,6 +213,11 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
       this.description = other.description;
     }
     this.weight = other.weight;
+    this.distance = other.distance;
+    if (other.isSetEd()) {
+      List<Integer> __this__ed = new ArrayList<Integer>(other.ed);
+      this.ed = __this__ed;
+    }
   }
 
   public Vertex deepCopy() {
@@ -229,14 +231,13 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
     this.idVertex = 0;
     setVersionIsSet(false);
     this.version = 0;
-    setIdEdge1IsSet(false);
-    this.idEdge1 = 0;
-    setIdEdge2IsSet(false);
-    this.idEdge2 = 0;
     this.color = null;
     this.description = null;
     setWeightIsSet(false);
     this.weight = 0.0;
+    setDistanceIsSet(false);
+    this.distance = 0.0;
+    this.ed = null;
   }
 
   public String getNameVertex() {
@@ -307,52 +308,6 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
 
   public void setVersionIsSet(boolean value) {
     __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __VERSION_ISSET_ID, value);
-  }
-
-  public int getIdEdge1() {
-    return this.idEdge1;
-  }
-
-  public Vertex setIdEdge1(int idEdge1) {
-    this.idEdge1 = idEdge1;
-    setIdEdge1IsSet(true);
-    return this;
-  }
-
-  public void unsetIdEdge1() {
-    __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __IDEDGE1_ISSET_ID);
-  }
-
-  /** Returns true if field idEdge1 is set (has been assigned a value) and false otherwise */
-  public boolean isSetIdEdge1() {
-    return EncodingUtils.testBit(__isset_bitfield, __IDEDGE1_ISSET_ID);
-  }
-
-  public void setIdEdge1IsSet(boolean value) {
-    __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __IDEDGE1_ISSET_ID, value);
-  }
-
-  public int getIdEdge2() {
-    return this.idEdge2;
-  }
-
-  public Vertex setIdEdge2(int idEdge2) {
-    this.idEdge2 = idEdge2;
-    setIdEdge2IsSet(true);
-    return this;
-  }
-
-  public void unsetIdEdge2() {
-    __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __IDEDGE2_ISSET_ID);
-  }
-
-  /** Returns true if field idEdge2 is set (has been assigned a value) and false otherwise */
-  public boolean isSetIdEdge2() {
-    return EncodingUtils.testBit(__isset_bitfield, __IDEDGE2_ISSET_ID);
-  }
-
-  public void setIdEdge2IsSet(boolean value) {
-    __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __IDEDGE2_ISSET_ID, value);
   }
 
   public String getColor() {
@@ -426,6 +381,68 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
     __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __WEIGHT_ISSET_ID, value);
   }
 
+  public double getDistance() {
+    return this.distance;
+  }
+
+  public Vertex setDistance(double distance) {
+    this.distance = distance;
+    setDistanceIsSet(true);
+    return this;
+  }
+
+  public void unsetDistance() {
+    __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __DISTANCE_ISSET_ID);
+  }
+
+  /** Returns true if field distance is set (has been assigned a value) and false otherwise */
+  public boolean isSetDistance() {
+    return EncodingUtils.testBit(__isset_bitfield, __DISTANCE_ISSET_ID);
+  }
+
+  public void setDistanceIsSet(boolean value) {
+    __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __DISTANCE_ISSET_ID, value);
+  }
+
+  public int getEdSize() {
+    return (this.ed == null) ? 0 : this.ed.size();
+  }
+
+  public java.util.Iterator<Integer> getEdIterator() {
+    return (this.ed == null) ? null : this.ed.iterator();
+  }
+
+  public void addToEd(int elem) {
+    if (this.ed == null) {
+      this.ed = new ArrayList<Integer>();
+    }
+    this.ed.add(elem);
+  }
+
+  public List<Integer> getEd() {
+    return this.ed;
+  }
+
+  public Vertex setEd(List<Integer> ed) {
+    this.ed = ed;
+    return this;
+  }
+
+  public void unsetEd() {
+    this.ed = null;
+  }
+
+  /** Returns true if field ed is set (has been assigned a value) and false otherwise */
+  public boolean isSetEd() {
+    return this.ed != null;
+  }
+
+  public void setEdIsSet(boolean value) {
+    if (!value) {
+      this.ed = null;
+    }
+  }
+
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
     case NAME_VERTEX:
@@ -449,22 +466,6 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
         unsetVersion();
       } else {
         setVersion((Integer)value);
-      }
-      break;
-
-    case ID_EDGE1:
-      if (value == null) {
-        unsetIdEdge1();
-      } else {
-        setIdEdge1((Integer)value);
-      }
-      break;
-
-    case ID_EDGE2:
-      if (value == null) {
-        unsetIdEdge2();
-      } else {
-        setIdEdge2((Integer)value);
       }
       break;
 
@@ -492,6 +493,22 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
       }
       break;
 
+    case DISTANCE:
+      if (value == null) {
+        unsetDistance();
+      } else {
+        setDistance((Double)value);
+      }
+      break;
+
+    case ED:
+      if (value == null) {
+        unsetEd();
+      } else {
+        setEd((List<Integer>)value);
+      }
+      break;
+
     }
   }
 
@@ -506,12 +523,6 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
     case VERSION:
       return Integer.valueOf(getVersion());
 
-    case ID_EDGE1:
-      return Integer.valueOf(getIdEdge1());
-
-    case ID_EDGE2:
-      return Integer.valueOf(getIdEdge2());
-
     case COLOR:
       return getColor();
 
@@ -520,6 +531,12 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
 
     case WEIGHT:
       return Double.valueOf(getWeight());
+
+    case DISTANCE:
+      return Double.valueOf(getDistance());
+
+    case ED:
+      return getEd();
 
     }
     throw new IllegalStateException();
@@ -538,16 +555,16 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
       return isSetIdVertex();
     case VERSION:
       return isSetVersion();
-    case ID_EDGE1:
-      return isSetIdEdge1();
-    case ID_EDGE2:
-      return isSetIdEdge2();
     case COLOR:
       return isSetColor();
     case DESCRIPTION:
       return isSetDescription();
     case WEIGHT:
       return isSetWeight();
+    case DISTANCE:
+      return isSetDistance();
+    case ED:
+      return isSetEd();
     }
     throw new IllegalStateException();
   }
@@ -592,24 +609,6 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
         return false;
     }
 
-    boolean this_present_idEdge1 = true;
-    boolean that_present_idEdge1 = true;
-    if (this_present_idEdge1 || that_present_idEdge1) {
-      if (!(this_present_idEdge1 && that_present_idEdge1))
-        return false;
-      if (this.idEdge1 != that.idEdge1)
-        return false;
-    }
-
-    boolean this_present_idEdge2 = true;
-    boolean that_present_idEdge2 = true;
-    if (this_present_idEdge2 || that_present_idEdge2) {
-      if (!(this_present_idEdge2 && that_present_idEdge2))
-        return false;
-      if (this.idEdge2 != that.idEdge2)
-        return false;
-    }
-
     boolean this_present_color = true && this.isSetColor();
     boolean that_present_color = true && that.isSetColor();
     if (this_present_color || that_present_color) {
@@ -634,6 +633,24 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
       if (!(this_present_weight && that_present_weight))
         return false;
       if (this.weight != that.weight)
+        return false;
+    }
+
+    boolean this_present_distance = true;
+    boolean that_present_distance = true;
+    if (this_present_distance || that_present_distance) {
+      if (!(this_present_distance && that_present_distance))
+        return false;
+      if (this.distance != that.distance)
+        return false;
+    }
+
+    boolean this_present_ed = true && this.isSetEd();
+    boolean that_present_ed = true && that.isSetEd();
+    if (this_present_ed || that_present_ed) {
+      if (!(this_present_ed && that_present_ed))
+        return false;
+      if (!this.ed.equals(that.ed))
         return false;
     }
 
@@ -683,26 +700,6 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetIdEdge1()).compareTo(other.isSetIdEdge1());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetIdEdge1()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.idEdge1, other.idEdge1);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
-    lastComparison = Boolean.valueOf(isSetIdEdge2()).compareTo(other.isSetIdEdge2());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetIdEdge2()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.idEdge2, other.idEdge2);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
     lastComparison = Boolean.valueOf(isSetColor()).compareTo(other.isSetColor());
     if (lastComparison != 0) {
       return lastComparison;
@@ -729,6 +726,26 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
     }
     if (isSetWeight()) {
       lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.weight, other.weight);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetDistance()).compareTo(other.isSetDistance());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetDistance()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.distance, other.distance);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetEd()).compareTo(other.isSetEd());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetEd()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.ed, other.ed);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -769,14 +786,6 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
     sb.append(this.version);
     first = false;
     if (!first) sb.append(", ");
-    sb.append("idEdge1:");
-    sb.append(this.idEdge1);
-    first = false;
-    if (!first) sb.append(", ");
-    sb.append("idEdge2:");
-    sb.append(this.idEdge2);
-    first = false;
-    if (!first) sb.append(", ");
     sb.append("color:");
     if (this.color == null) {
       sb.append("null");
@@ -795,6 +804,18 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
     if (!first) sb.append(", ");
     sb.append("weight:");
     sb.append(this.weight);
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("distance:");
+    sb.append(this.distance);
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("ed:");
+    if (this.ed == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.ed);
+    }
     first = false;
     sb.append(")");
     return sb.toString();
@@ -865,23 +886,7 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 4: // ID_EDGE1
-            if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-              struct.idEdge1 = iprot.readI32();
-              struct.setIdEdge1IsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
-          case 5: // ID_EDGE2
-            if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-              struct.idEdge2 = iprot.readI32();
-              struct.setIdEdge2IsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
-          case 6: // COLOR
+          case 4: // COLOR
             if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
               struct.color = iprot.readString();
               struct.setColorIsSet(true);
@@ -889,7 +894,7 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 7: // DESCRIPTION
+          case 5: // DESCRIPTION
             if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
               struct.description = iprot.readString();
               struct.setDescriptionIsSet(true);
@@ -897,10 +902,36 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 8: // WEIGHT
+          case 6: // WEIGHT
             if (schemeField.type == org.apache.thrift.protocol.TType.DOUBLE) {
               struct.weight = iprot.readDouble();
               struct.setWeightIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 7: // DISTANCE
+            if (schemeField.type == org.apache.thrift.protocol.TType.DOUBLE) {
+              struct.distance = iprot.readDouble();
+              struct.setDistanceIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 8: // ED
+            if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
+              {
+                org.apache.thrift.protocol.TList _list0 = iprot.readListBegin();
+                struct.ed = new ArrayList<Integer>(_list0.size);
+                for (int _i1 = 0; _i1 < _list0.size; ++_i1)
+                {
+                  int _elem2;
+                  _elem2 = iprot.readI32();
+                  struct.ed.add(_elem2);
+                }
+                iprot.readListEnd();
+              }
+              struct.setEdIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -931,12 +962,6 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
       oprot.writeFieldBegin(VERSION_FIELD_DESC);
       oprot.writeI32(struct.version);
       oprot.writeFieldEnd();
-      oprot.writeFieldBegin(ID_EDGE1_FIELD_DESC);
-      oprot.writeI32(struct.idEdge1);
-      oprot.writeFieldEnd();
-      oprot.writeFieldBegin(ID_EDGE2_FIELD_DESC);
-      oprot.writeI32(struct.idEdge2);
-      oprot.writeFieldEnd();
       if (struct.color != null) {
         oprot.writeFieldBegin(COLOR_FIELD_DESC);
         oprot.writeString(struct.color);
@@ -950,6 +975,21 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
       oprot.writeFieldBegin(WEIGHT_FIELD_DESC);
       oprot.writeDouble(struct.weight);
       oprot.writeFieldEnd();
+      oprot.writeFieldBegin(DISTANCE_FIELD_DESC);
+      oprot.writeDouble(struct.distance);
+      oprot.writeFieldEnd();
+      if (struct.ed != null) {
+        oprot.writeFieldBegin(ED_FIELD_DESC);
+        {
+          oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I32, struct.ed.size()));
+          for (int _iter3 : struct.ed)
+          {
+            oprot.writeI32(_iter3);
+          }
+          oprot.writeListEnd();
+        }
+        oprot.writeFieldEnd();
+      }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
@@ -977,19 +1017,19 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
       if (struct.isSetVersion()) {
         optionals.set(2);
       }
-      if (struct.isSetIdEdge1()) {
+      if (struct.isSetColor()) {
         optionals.set(3);
       }
-      if (struct.isSetIdEdge2()) {
+      if (struct.isSetDescription()) {
         optionals.set(4);
       }
-      if (struct.isSetColor()) {
+      if (struct.isSetWeight()) {
         optionals.set(5);
       }
-      if (struct.isSetDescription()) {
+      if (struct.isSetDistance()) {
         optionals.set(6);
       }
-      if (struct.isSetWeight()) {
+      if (struct.isSetEd()) {
         optionals.set(7);
       }
       oprot.writeBitSet(optionals, 8);
@@ -1002,12 +1042,6 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
       if (struct.isSetVersion()) {
         oprot.writeI32(struct.version);
       }
-      if (struct.isSetIdEdge1()) {
-        oprot.writeI32(struct.idEdge1);
-      }
-      if (struct.isSetIdEdge2()) {
-        oprot.writeI32(struct.idEdge2);
-      }
       if (struct.isSetColor()) {
         oprot.writeString(struct.color);
       }
@@ -1016,6 +1050,18 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
       }
       if (struct.isSetWeight()) {
         oprot.writeDouble(struct.weight);
+      }
+      if (struct.isSetDistance()) {
+        oprot.writeDouble(struct.distance);
+      }
+      if (struct.isSetEd()) {
+        {
+          oprot.writeI32(struct.ed.size());
+          for (int _iter4 : struct.ed)
+          {
+            oprot.writeI32(_iter4);
+          }
+        }
       }
     }
 
@@ -1036,24 +1082,33 @@ public class Vertex implements org.apache.thrift.TBase<Vertex, Vertex._Fields>, 
         struct.setVersionIsSet(true);
       }
       if (incoming.get(3)) {
-        struct.idEdge1 = iprot.readI32();
-        struct.setIdEdge1IsSet(true);
-      }
-      if (incoming.get(4)) {
-        struct.idEdge2 = iprot.readI32();
-        struct.setIdEdge2IsSet(true);
-      }
-      if (incoming.get(5)) {
         struct.color = iprot.readString();
         struct.setColorIsSet(true);
       }
-      if (incoming.get(6)) {
+      if (incoming.get(4)) {
         struct.description = iprot.readString();
         struct.setDescriptionIsSet(true);
       }
-      if (incoming.get(7)) {
+      if (incoming.get(5)) {
         struct.weight = iprot.readDouble();
         struct.setWeightIsSet(true);
+      }
+      if (incoming.get(6)) {
+        struct.distance = iprot.readDouble();
+        struct.setDistanceIsSet(true);
+      }
+      if (incoming.get(7)) {
+        {
+          org.apache.thrift.protocol.TList _list5 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I32, iprot.readI32());
+          struct.ed = new ArrayList<Integer>(_list5.size);
+          for (int _i6 = 0; _i6 < _list5.size; ++_i6)
+          {
+            int _elem7;
+            _elem7 = iprot.readI32();
+            struct.ed.add(_elem7);
+          }
+        }
+        struct.setEdIsSet(true);
       }
     }
   }
